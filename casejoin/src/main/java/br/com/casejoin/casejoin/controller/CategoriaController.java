@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.casejoin.casejoin.dto.CategoriaDTO;
 import br.com.casejoin.casejoin.model.Categoria;
 import br.com.casejoin.casejoin.service.CategoriaService;
 
@@ -53,10 +54,13 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
-        categoria.setId(id);
+    public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody CategoriaDTO categoriadto) {
+    	
+    	Categoria categoria = categoriaService.getCategoriaById(id);
+    	
+    	categoria.setNome(categoriadto.getNome());
         return ResponseEntity.ok(categoriaService.saveCategoria(categoria));
-    }
+    } 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {

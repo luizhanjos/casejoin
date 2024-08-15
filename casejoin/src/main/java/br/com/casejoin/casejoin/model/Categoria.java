@@ -2,8 +2,11 @@ package br.com.casejoin.casejoin.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +35,8 @@ public class Categoria {
 	@Size(max=100)
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Produto> produtos;
 
 }

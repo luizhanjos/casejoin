@@ -1,0 +1,28 @@
+<h1 mat-dialog-title class="text-center" style="text-align: center; margin-bottom: 20px;">Cadastrar Categoria</h1>
+
+<div mat-dialog-content style="display: flex; flex-direction: column; align-items: center;">
+  <form class="gravar-form" [formGroup]='formCategoria' style="width: 100%; max-width: 400px;">
+    <mat-form-field class="gravar-full-width input-nome mt-3" appearance="fill" style="width: 100%;">
+      <mat-label>Nome da categoria:</mat-label>
+      <input matInput formControlName="nome">
+      <div *ngIf="this.formCategoria.controls['nome'].invalid && this.formCategoria.controls['nome'].touched">
+        <div [ngSwitch]="this.formCategoria.controls['nome'].errors !=null">
+          <span class="text-danger" *ngSwitchCase="this.formCategoria.controls['nome'].errors?.['required']">
+            O Campo Nome é Obrigatório<br>
+          </span>
+          <span class="text-danger" *ngSwitchCase="this.formCategoria.controls['nome'].errors?.['maxlength'] != null ">
+            O nome não pode ter mais de 50 letras<br>
+          </span>
+        </div>
+      </div>
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="primary" class="button-gravar" (click)="salvar();"
+    [disabled]="!formCategoria.valid" [mat-dialog-close]="true" style="margin-top: 20px;">Salvar</button>
+</div>
+
+<div mat-dialog-actions style="justify-content: center;">
+  <span class="text-danger" *ngIf="!formCategoria.valid">
+    Para prosseguir, preencha os dados corretamente<br>
+  </span>
+</div>

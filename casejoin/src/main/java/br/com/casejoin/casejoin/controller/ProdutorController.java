@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.ResourceClosedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.casejoin.casejoin.dto.ProdutoDTO;
 import br.com.casejoin.casejoin.model.Categoria;
@@ -63,15 +65,32 @@ public class ProdutorController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Produto> updateProduto(@PathVariable Long id, @RequestBody Produto produto) {
-		produto.setId(id);
-		return ResponseEntity.ok(produtoService.saveProduto(produto));
+	public ResponseEntity<Produto> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDto) {
+	    
+	    Categoria categoria = categoriaService.getCategoriaById(produtoDto.getCategoriaId());
+	    if (categoria == null) {
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria informada não encontrada");
+	    }
+	    
+	    Produto existingProduto = produtoService.getProdutoById(id);
+	    if (existingProduto == null) {
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto informado não encontrado");
+	    }
+	    
+	    existingProduto.setNome(produtoDto.getNome());
+	    existingProduto.setPreco(produtoDto.getPreco());
+	    existingProduto.setCategoria(categoria);
+	    
+	    return ResponseEntity.ok(produtoService.saveProduto(existingProduto));
 	}
-
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteProduto(@PathVariable Long id) {
-		produtoService.deleteProduto(id);
-		return ResponseEntity.noContent().build();
+	    Produto produto = produtoService.getProdutoById(id);
+	    if (produto == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+	    produtoService.deleteProduto(id);
+	    return ResponseEntity.noContent().build();
 	}
-
 }

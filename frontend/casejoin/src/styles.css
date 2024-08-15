@@ -1,0 +1,12 @@
+
+html, body {
+    margin: 0; /*If you  want to remove the custom margin*/
+    display: block;
+    height: 100%;
+    background: #e0e8ef;   
+   }
+   
+   app-root {
+    display: flex;
+    flex-direction: column;
+   }

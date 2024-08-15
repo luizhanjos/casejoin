@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <mat-card class="example-card justify-content-between align-items-center shadow-md" [routerLink]="['/categorias/listar']">
+        <mat-card-header>
+          <mat-card-title class="text-center font-weigth-bold">Categorias</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column align-items-center">
+         <button class="btn btn-primary btn-circle">
+          <mat-icon>category</mat-icon>
+         </button>
+         
+          <div class="row mb-2 py-2">
+            <p class="text-center">Gerenciar Categorias</p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="text-center">
+          <mat-icon>arrow_circle_right</mat-icon>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col-md-4">
+      <mat-card class="example-card justify-content-between align-items-center shadow-sm" [routerLink]="['/produtos/listar']">
+        <mat-card-header>
+          <mat-card-title class="text-center font-weigth-bold">Produtos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column align-items-center">
+          <button class="btn btn-primary btn-circle">
+            <mat-icon>shopping-bag</mat-icon>
+           </button>
+           <div class="row mb-2 py-2">
+            <p class="text-center">Gerenciar Produtos</p>
+          </div>
+        </mat-card-content>
+        <mat-card-actions class="text-center">
+          <mat-icon>arrow_circle_right</mat-icon>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
